@@ -23,43 +23,63 @@ function MainTimer(props) {
 	);
 }
 
-function IntervalHistory() {
-
+function IntervalHistory(props) {
+	let intervalHistory = [...props.intervalHistory]
+	let intervHist = intervalHistory.map((time) => {
+		return <div>{formatTime(new Date(time))}</div>;
+	});
+	return (
+		<div>
+			{intervHist}
+		</div>
+	);
 }
 
 function ButtonBlock(props) {
 	const setButtonBlock = props.setButtonBlock;
 	
-	function startHandler () {
+	function startHandler() {
+		let currentDate = new Date();
 		props.setTimerState('start');
-		props.setStartTime(new Date());
+		props.setStartTime(currentDate);
+		props.setStartLapTime(currentDate);
 		props.setButtonBlock("stop");
 	}
 
-	function stopHandler () {
+	function stopHandler() {
 		props.setTimerState('stop');
 		props.setButtonBlock("restart");
 		props.setAmountOfCalculatedTime(props.amountOfCalculatedTime + props.calculatedTime);
 	}
 
-	function restartHandler () {
+	function intervalHandler() {
+		let currentDate = new Date()
+		let lap = currentDate - props.startLapTime;
+		props.setStartLapTime(currentDate);
+		props.setIntervalHistory([...props.intervalHistory, lap]);
+	}
+
+	function restartHandler() {
+		let currentDate = new Date();
 		props.setTimerState('start');
-		props.setStartTime(new Date());
+		props.setStartTime(currentDate);
+		props.setStartLapTime(currentDate);
 		props.setButtonBlock("stop");
 	}
 
-	function dischargeHandler () {
+	function dischargeHandler() {
 		props.setButtonBlock("start");
 		props.setAmountOfCalculatedTime(0);
 		props.setCalculatedTime(0);
 		props.setMainTimer(new Date(0));
+		props.setIntervalHistory([]);
 	}
 
 	switch (props.buttonBlock) {
 		case ('stop'):
 			return (<div>
 				<button className="stop" onClick={ () => stopHandler() }>Стоп</button>
-				<button className="interval">Интервал</button>
+				<button className="interval" onClick={ () => intervalHandler() }>Интервал</button>
 			</div>
 			);
 		case ('restart'):
@@ -78,6 +98,7 @@ function ButtonBlock(props) {
 function App() {
 	const [timerState, setTimerState] = useState('clean');
 	const [startTime, setStartTime] = useState(new Date());
+	const [startLapTime, setStartLapTime] = useState(new Date());
 	const [mainTimer, setMainTimer] = useState(new Date(0));
 	const [calculatedTime, setCalculatedTime] = useState(0);
 	const [amountOfCalculatedTime, setAmountOfCalculatedTime] = useState(0);
@@ -91,12 +112,18 @@ function App() {
 				setTimerState={setTimerState}
 				startTime={startTime} 
 				setStartTime={setStartTime} 
+				startLapTime={startLapTime}
+				setStartLapTime={setStartLapTime}
 				mainTimer={mainTimer}
 				setMainTimer={setMainTimer}
 				calculatedTime={calculatedTime}
 				setCalculatedTime={setCalculatedTime}
 				amountOfCalculatedTime={amountOfCalculatedTime}
 				setAmountOfCalculatedTime={setAmountOfCalculatedTime}
+			/>
+			<IntervalHistory
+				intervalHistory={intervalHistory}
+				setIntervalHistory={setIntervalHistory}
 			/>
 			<ButtonBlock
 				buttonBlock={buttonBlock}
@@ -105,12 +132,16 @@ function App() {
 				setTimerState={setTimerState}
 				startTime={startTime}
 				setStartTime={setStartTime}
+				startLapTime={startLapTime}
+				setStartLapTime={setStartLapTime}
 				mainTimer={mainTimer}
 				setMainTimer={setMainTimer}
 				calculatedTime={calculatedTime}
 				setCalculatedTime={setCalculatedTime}
 				amountOfCalculatedTime={amountOfCalculatedTime}
 				setAmountOfCalculatedTime={setAmountOfCalculatedTime}
+				intervalHistory={intervalHistory}
+				setIntervalHistory={setIntervalHistory}
 			/>
 		</div>	
 	);
