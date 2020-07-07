@@ -10,7 +10,9 @@ function MainTimer(props) {
 		let timerId = setTimeout(() => {
 			let time = new Date() - props.startTime;
 			props.setCalculatedTime( time );
-			props.setMainTimer(new Date(props.amountOfCalculatedTime + props.calculatedTime));
+			props.setMainTimer(
+				new Date(props.amountOfCalculatedTime + props.calculatedTime)
+			);
 		}, 200);
 
 		return function cleanup() {
@@ -18,8 +20,15 @@ function MainTimer(props) {
 		} 
 	});
 
+	let formTime = formatTime(props.mainTimer);
+
 	return (
-			<div className="main-timer">{formatTime(props.mainTimer)}</div>
+			<div className="main-timer">
+				<span>{formTime.hours}</span>:
+				<span>{formTime.minutes}</span>:
+				<span>{formTime.seconds}</span> <span className="milliseconds">{formTime.milliseconds}</span>
+				<hr/>
+			</div>
 	);
 }
 
@@ -30,10 +39,25 @@ function IntervalHistory(props) {
 		if(ind < 10) {
 			ind = '0' + ind;
 		}
-		return <div key={ind.toString()}><span>{ind}</span> | <span>{formatTime(time[0])}</span> | <span>{formatTime(new Date(time[1]))}</span></div>;
+
+		let formMainTime = formatTime(time[0]);
+		let formLapTime = formatTime(new Date(time[1]));
+
+		return (<div key={ind.toString()}>
+			<span className="index">{ind}</span> | <span className="main-timer-history">
+				<span>{formMainTime.hours}</span>:
+				<span>{formMainTime.minutes}</span>:
+				<span>{formMainTime.seconds}</span>:
+				<span>{formMainTime.milliseconds}</span>
+			</span> | <span className="lap-timer-history">
+				<span>{formLapTime.hours}</span>:
+				<span>{formLapTime.minutes}</span>:
+				<span>{formLapTime.seconds}</span>. <span className="milliseconds">{formLapTime.milliseconds}</span>
+			</span>
+		</div>);
 	});
 	return (
-		<div class="interval-history">
+		<div className="interval-history">
 			{intervHist}
 		</div>
 	);
@@ -77,21 +101,36 @@ function ButtonBlock(props) {
 
 	switch (props.buttonBlock) {
 		case ('stop'):
-			return (<div className="buttons-block">
-				<button className="stop" onClick={ () => stopHandler() }>Стоп</button>
-				<button className="interval" onClick={ () => intervalHandler() }>Интервал</button>
+			return (
+			<div className="buttons-block">
+				<hr/>
+				<button className="stop" onClick={ () => stopHandler() }>
+					Стоп
+				</button>
+				<button className="interval" onClick={ () => intervalHandler() }>
+					Интервал
+				</button>
 			</div>
 			);
 		case ('restart'):
-			return (<div className="buttons-block">
-				<button className="restart" onClick={ () => restartHandler() }>Рестарт</button>
-				<button className="discharge" onClick={ () => dischargeHandler(setButtonBlock) }>Сброс</button>
+			return (
+			<div className="buttons-block">
+				<hr/>
+				<button className="restart" onClick={ () => restartHandler() }>
+					Рестарт
+				</button>
+				<button className="discharge" onClick={ () => dischargeHandler(setButtonBlock) }>
+					Сброс
+				</button>
 			</div>);
 		case ('start'):
 		default:
 			return (
 				<div className="buttons-block">
-					<button className="start" onClick={ () => startHandler() }>Начать</button>
+					<hr/>
+					<button className="start" onClick={ () => startHandler() }>
+						Начать
+					</button>
 				</div>
 			);
 	}

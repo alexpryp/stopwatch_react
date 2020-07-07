@@ -16,12 +16,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
+/* code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
+} */
 
 .app {
+  width: 300px;
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
   border-radius: 10px;
@@ -30,12 +31,35 @@ code {
 .main-timer {
   text-align: center;
   font-size: 3.5em;
+  margin: 0 5px;
+  color: #5BFF62;
+}
+hr {
+  margin: 10px 0;
+  border: none; /* Убираем границу */
+  background-color: rgba(255, 255, 255, 0.3);; /* Цвет линии */
+  color: rgba(255, 255, 255, 0.3);; /* Цвет линии для IE6-7 */
+  height: 2px; /* Толщина линии */
+}
+.milliseconds {
+  font-size: 0.7em;
 }
 .interval-history {
+  max-height: 350px;
   text-align: center;
-  font-size: 1.2em;
-  min-height: 300px;
+  font-size: 1.4em;
+  min-height: 350px;
   margin: 5px;
+  overflow: auto;
+}
+.index {
+  color: #FDA371;
+}
+.main-timer-history {
+  font-size: 0.7em;
+}
+.lap-timer-history {
+  color: #5BFF62;
 }
 .buttons-block {
   text-align: center;
@@ -55,22 +79,22 @@ button.discharge {
   outline: none;
 }
 button.start {
-  width: 250px;
+  width: 270px;
   background-color: #41B619;
 }
 button:hover {
   cursor: pointer;
 }
 button.stop {
-  width: 120px;
+  width: 130px;
   background-color: #FF0000;
 }
 button.interval,
 button.discharge {
-  width: 120px;
+  width: 130px;
   background-color: #0260E8;
 }
 button.restart {
-  width: 120px;
+  width: 130px;
   background-color: #41B619;
 }

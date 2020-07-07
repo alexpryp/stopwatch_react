@@ -15,9 +15,12 @@ export function formatTime(date) {
     }
     if (milliseconds < 10) {
         milliseconds = '0' + milliseconds;
-    } else if (milliseconds > 100) {
+    } else if (milliseconds > 99) {
         milliseconds = +Math.round(milliseconds / 10);
+        if (milliseconds == 100) {
+            milliseconds = 10;
+        }
     }
 
-    return hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
+    return {hours, minutes, seconds, milliseconds};
 }
