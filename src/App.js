@@ -25,11 +25,15 @@ function MainTimer(props) {
 
 function IntervalHistory(props) {
 	let intervalHistory = [...props.intervalHistory]
-	let intervHist = intervalHistory.map((time) => {
-		return <div>{formatTime(new Date(time))}</div>;
+	let intervHist = intervalHistory.map((time, index) => {
+		let ind = index + 1;
+		if(ind < 10) {
+			ind = '0' + ind;
+		}
+		return <div key={ind.toString()}><span>{ind}</span> | <span>{formatTime(time[0])}</span> | <span>{formatTime(new Date(time[1]))}</span></div>;
 	});
 	return (
-		<div>
+		<div class="interval-history">
 			{intervHist}
 		</div>
 	);
@@ -39,10 +43,9 @@ function ButtonBlock(props) {
 	const setButtonBlock = props.setButtonBlock;
 	
 	function startHandler() {
-		let currentDate = new Date();
 		props.setTimerState('start');
-		props.setStartTime(currentDate);
-		props.setStartLapTime(currentDate);
+		props.setStartTime(new Date());
+		props.setStartLapTime(props.mainTimer);
 		props.setButtonBlock("stop");
 	}
 
@@ -53,17 +56,14 @@ function ButtonBlock(props) {
 	}
 
 	function intervalHandler() {
-		let currentDate = new Date()
-		let lap = currentDate - props.startLapTime;
-		props.setStartLapTime(currentDate);
-		props.setIntervalHistory([...props.intervalHistory, lap]);
+		let lap = props.mainTimer - props.startLapTime;
+		props.setStartLapTime(props.mainTimer);
+		props.setIntervalHistory([...props.intervalHistory, [props.mainTimer, lap]]);
 	}
 
 	function restartHandler() {
-		let currentDate = new Date();
 		props.setTimerState('start');
-		props.setStartTime(currentDate);
-		props.setStartLapTime(currentDate);
+		props.setStartTime(new Date());
 		props.setButtonBlock("stop");
 	}
 
@@ -77,20 +77,22 @@ function ButtonBlock(props) {
 
 	switch (props.buttonBlock) {
 		case ('stop'):
-			return (<div>
+			return (<div className="buttons-block">
 				<button className="stop" onClick={ () => stopHandler() }>Стоп</button>
 				<button className="interval" onClick={ () => intervalHandler() }>Интервал</button>
 			</div>
 			);
 		case ('restart'):
-			return (<div>
+			return (<div className="buttons-block">
 				<button className="restart" onClick={ () => restartHandler() }>Рестарт</button>
 				<button className="discharge" onClick={ () => dischargeHandler(setButtonBlock) }>Сброс</button>
 			</div>);
 		case ('start'):
 		default:
 			return (
-				<button className="start" onClick={ () => startHandler() }>Начать</button>
+				<div className="buttons-block">
+					<button className="start" onClick={ () => startHandler() }>Начать</button>
+				</div>
 			);
 	}
 }

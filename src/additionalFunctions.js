@@ -14,9 +14,9 @@ export function formatTime(date) {
         seconds = '0' + seconds;
     }
     if (milliseconds < 10) {
-        milliseconds = '00' + milliseconds;
-    } else if (milliseconds < 100) {
         milliseconds = '0' + milliseconds;
+    } else if (milliseconds > 100) {
+        milliseconds = +Math.round(milliseconds / 10);
     }
 
     return hours + ':' + minutes + ':' + seconds + ':' + milliseconds;
