@@ -27,40 +27,65 @@ function MainTimer(props) {
 				<span>{formTime.hours}</span>:
 				<span>{formTime.minutes}</span>:
 				<span>{formTime.seconds}</span> <span className="milliseconds">{formTime.milliseconds}</span>
-				<hr/>
 			</div>
 	);
 }
 
 function IntervalHistory(props) {
 	let intervalHistory = [...props.intervalHistory]
-	let intervHist = intervalHistory.map((time, index) => {
-		let ind = index + 1;
-		if(ind < 10) {
-			ind = '0' + ind;
-		}
 
-		let formMainTime = formatTime(time[0]);
-		let formLapTime = formatTime(new Date(time[1]));
+	if (intervalHistory.length > 0) {
+		let intervHist = intervalHistory.map((time, index) => {
+			let ind = index + 1;
+			if(ind < 10) {
+				ind = '0' + ind;
+			}
 
-		return (<div key={ind.toString()}>
-			<span className="index">{ind}</span> | <span className="main-timer-history">
-				<span>{formMainTime.hours}</span>:
-				<span>{formMainTime.minutes}</span>:
-				<span>{formMainTime.seconds}</span>:
-				<span>{formMainTime.milliseconds}</span>
-			</span> | <span className="lap-timer-history">
-				<span>{formLapTime.hours}</span>:
-				<span>{formLapTime.minutes}</span>:
-				<span>{formLapTime.seconds}</span>. <span className="milliseconds">{formLapTime.milliseconds}</span>
-			</span>
-		</div>);
-	});
-	return (
-		<div className="interval-history">
-			{intervHist}
-		</div>
-	);
+			let formMainTime = formatTime(time[0]);
+			let formLapTime = formatTime(new Date(time[1]));
+
+			return (<div key={ind.toString()}>
+				<span className="index">{ind}</span> | <span className="main-timer-history">
+					<span>{formMainTime.hours}</span>:
+					<span>{formMainTime.minutes}</span>:
+					<span>{formMainTime.seconds}</span>:
+					<span>{formMainTime.milliseconds}</span>
+				</span> | <span className="lap-timer-history">
+					<span>{formLapTime.hours}</span>:
+					<span>{formLapTime.minutes}</span>:
+					<span>{formLapTime.seconds}</span>. <span className="milliseconds">{formLapTime.milliseconds}</span>
+				</span>
+			</div>);
+		});
+	
+		return (
+			<div className="interval-history">
+				{intervHist}
+			</div>
+		);
+	} else if (props.buttonBlock === 'stop' || props.buttonBlock === 'restart') {
+		return (
+			<div className="interval-history">
+				<div className="interval-history-background">
+					<span>&#x1F551;</span>
+				</div>
+				<div className="interval-history-instructions">
+					<span>После нажатия кнопки "Интервал" появятся данные о времени, затраченном на каждый Интервал</span>	
+				</div>
+			</div>
+		);
+	} else {
+		return (
+			<div className="interval-history">
+				<div className="interval-history-background">
+					<span>&#x1F551;</span>
+				</div>
+				<div className="interval-history-instructions">
+					<span>После нажатия кнопки "Начать" секундомер начнет отсчет</span>	
+				</div>
+			</div>
+		);
+	}
 }
 
 function ButtonBlock(props) {
@@ -165,6 +190,7 @@ function App() {
 			<IntervalHistory
 				intervalHistory={intervalHistory}
 				setIntervalHistory={setIntervalHistory}
+				buttonBlock={buttonBlock}
 			/>
 			<ButtonBlock
 				buttonBlock={buttonBlock}

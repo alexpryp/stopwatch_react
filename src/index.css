@@ -32,25 +32,36 @@ body {
   text-align: center;
   font-size: 3.5em;
   margin: 0 5px;
-  color: #5BFF62;
+  color: #fff;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
 }
 hr {
-  margin: 10px 0;
+  margin: 10px auto;
+  width: 270px;
   border: none; /* Убираем границу */
-  background-color: rgba(255, 255, 255, 0.3);; /* Цвет линии */
-  color: rgba(255, 255, 255, 0.3);; /* Цвет линии для IE6-7 */
+  background-color: rgba(255, 255, 255, 0.3); /* Цвет линии */
+  color: rgba(255, 255, 255, 0.3); /* Цвет линии для IE6-7 */
   height: 2px; /* Толщина линии */
 }
 .milliseconds {
   font-size: 0.7em;
 }
+.interval-history, .interval-history-background {
+  text-align: center;
+}
 .interval-history {
   max-height: 350px;
-  text-align: center;
-  font-size: 1.4em;
   min-height: 350px;
+  font-size: 1.4em;
   margin: 5px;
   overflow: auto;
+}
+.interval-history-background, .interval-history-instructions {
+  opacity: .5;
+}
+.interval-history-background {
+  font-size: 5em;
 }
 .index {
   color: #FDA371;
