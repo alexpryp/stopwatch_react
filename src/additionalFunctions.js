@@ -17,7 +17,7 @@ export function formatTime(date) {
         milliseconds = '0' + milliseconds;
     } else if (milliseconds > 99) {
         milliseconds = +Math.round(milliseconds / 10);
-        if (milliseconds == 100) {
+        if (milliseconds === 100) {
             milliseconds = 10;
         }
     }

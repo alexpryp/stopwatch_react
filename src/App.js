@@ -67,7 +67,7 @@ function IntervalHistory(props) {
 		return (
 			<div className="interval-history">
 				<div className="interval-history-background">
-					<span>&#x1F551;</span>
+					<span aria-label="Clock Face Two Oclock" role="img">&#x1F551;</span>
 				</div>
 				<div className="interval-history-instructions">
 					<span>После нажатия кнопки "Интервал" появятся данные о времени, затраченном на каждый Интервал</span>	
@@ -78,7 +78,7 @@ function IntervalHistory(props) {
 		return (
 			<div className="interval-history">
 				<div className="interval-history-background">
-					<span>&#x1F551;</span>
+					<span aria-label="Clock Face Two Oclock" role="img">&#x1F551;</span>
 				</div>
 				<div className="interval-history-instructions">
 					<span>После нажатия кнопки "Начать" секундомер начнет отсчет</span>	
@@ -175,29 +175,21 @@ function App() {
 		<div className="app">
 			<MainTimer 
 				timerState={timerState}
-				setTimerState={setTimerState}
 				startTime={startTime} 
-				setStartTime={setStartTime} 
-				startLapTime={startLapTime}
-				setStartLapTime={setStartLapTime}
 				mainTimer={mainTimer}
 				setMainTimer={setMainTimer}
 				calculatedTime={calculatedTime}
 				setCalculatedTime={setCalculatedTime}
 				amountOfCalculatedTime={amountOfCalculatedTime}
-				setAmountOfCalculatedTime={setAmountOfCalculatedTime}
 			/>
 			<IntervalHistory
 				intervalHistory={intervalHistory}
-				setIntervalHistory={setIntervalHistory}
 				buttonBlock={buttonBlock}
 			/>
 			<ButtonBlock
 				buttonBlock={buttonBlock}
 				setButtonBlock={setButtonBlock}
-				timerState={timerState}
 				setTimerState={setTimerState}
-				startTime={startTime}
 				setStartTime={setStartTime}
 				startLapTime={startLapTime}
 				setStartLapTime={setStartLapTime}
